@@ -120,8 +120,3 @@ std::vector<torch::Tensor> custom_conv2d_backward(
     return {grad_input, grad_weight, grad_bias};
 }
 
-// 注册
-PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
-    m.def("conv2d_forward", &custom_conv2d_forward, "Custom Conv2D Forward");
-    m.def("conv2d_backward", &custom_conv2d_backward, "Custom Conv2D Backward");
-}

@@ -21,8 +21,3 @@ std::vector<torch::Tensor> linear_backward(torch::Tensor grad_output, torch::Ten
     return {grad_input, grad_weight, grad_bias};
 }
 
-// 定义模块
-PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
-    m.def("linear_forward", &linear_forward, "Linear forward (C++)");
-    m.def("linear_backward", &linear_backward, "Linear backward (C++)");
-}
