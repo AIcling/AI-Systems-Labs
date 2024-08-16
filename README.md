@@ -1,5 +1,3 @@
 # AI-Systems-Labs
 
-## [LAB2 : custom cpp extentions with torch](./mylab2)
-
-a cpp implementation for tensor **linear**, **convolution** and **dropout**
+## [LAB2 : custom cpp extentions with torch(linear, convolution and dropout)](./mylab2)
