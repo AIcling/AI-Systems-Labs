@@ -1,0 +1,3 @@
+/mnt/e/AIsys/labs/microsoft/mylab2/build/CMakeFiles/custom_linear_cpp.dir
+/mnt/e/AIsys/labs/microsoft/mylab2/build/CMakeFiles/edit_cache.dir
+/mnt/e/AIsys/labs/microsoft/mylab2/build/CMakeFiles/rebuild_cache.dir

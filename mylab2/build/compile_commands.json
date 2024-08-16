@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/mnt/e/AIsys/labs/microsoft/mylab2/build",
+  "command": "/usr/bin/c++ -DAT_PARALLEL_OPENMP=1 -D_THP_CORE -Dcustom_linear_cpp_EXPORTS -isystem /mnt/e/AIsys/labs/microsoft/libtorch/include -isystem /mnt/e/AIsys/labs/microsoft/libtorch/include/torch/csrc/api/include -isystem /usr/include/python3.10 -g -fPIC -fvisibility=hidden -Wall -Wextra -Wpedantic -D_GLIBCXX_USE_CXX11_ABI=0 -std=gnu++14 -o CMakeFiles/custom_linear_cpp.dir/custom_linear.cpp.o -c /mnt/e/AIsys/labs/microsoft/mylab2/custom_linear.cpp",
+  "file": "/mnt/e/AIsys/labs/microsoft/mylab2/custom_linear.cpp"
+}
+]

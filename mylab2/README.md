@@ -26,3 +26,20 @@
 pytorch实现：`custom_linear.py`
 
 PyTorch 的张量运算在后端执行的原理涉及：**自动求导机制**和**动态计算图**。
+
+* **`ctx`** 是 PyTorch 自动生成的context对象，它在前向传播时被传递给 `forward` 方法，并在反向传播时传递给 `backward` 方法。可以使用 `ctx` 来存储任意信息，以便在反向传播时使用。
+* **`ctx.save_for_backward(*tensors)`** 方法可以保存前向传播中的张量，这些张量将在反向传播中使用。这些张量会被存储在反向传播过程中 `ctx.saved_tensors` 中。
+
+前向传播的执行过程：
+
+1. **调用 `forward` 方法**: 当执行 `CustomLinear` 的前向传播时，PyTorch 会调用 `forward` 方法，该方法的核心是 `CustomLinearFunction.apply`：这里的 `apply` 方法是 PyTorch `autograd.Function` 类的标准方法，它用于执行自定义的前向传播和记录反向传播所需的信息。
+2. **进入 `CustomLinearFunction` 的 `forward` 静态方法**: 在调用 `apply` 后，控制权转移到 `CustomLinearFunction.forward`：在这个 `forward` 方法中，执行了如下步骤：**保存中间变量**（`ctx` 是上下文对象，通过 `ctx.save_for_backward` 保存了输入张量 `input`、权重 `weight` 和偏置 `bias`。这些变量将在反向传播时使用。）；计算输出（这一步执行矩阵乘法，将输入张量与转置后的权重矩阵相乘，得到输出张量 `output`。这是线性层的核心操作。）最后，`forward` 方法返回计算得到的输出张量。
+3. **返回到模型的前向传播**: 经过 `CustomLinearFunction` 处理后，计算得到的输出会返回给 `CustomLinear` 模块的 `forward` 方法，并继续传递到模型的下一层。
+   ```
+       def forward(ctx, input, weight, bias=None):
+           ctx.save_for_backward(input, weight, bias)
+           output = input.mm(weight.t())
+           if bias is not None:
+               output += bias
+           return output
+   ```
