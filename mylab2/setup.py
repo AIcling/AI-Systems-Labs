@@ -10,8 +10,8 @@ setup(
     description='A custom C++ extension for PyTorch',
     ext_modules=[
         CppExtension(
-            name='custom_cpp_extention',
-            sources=['custom_linear.cpp','custom_conv.cpp','bindings.cpp'],
+            name='mycpp_extention',
+            sources=['custom_linear.cpp','custom_conv.cpp','custom_dropout2d.cpp','bindings.cpp'],
         ),
     ],
     cmdclass={

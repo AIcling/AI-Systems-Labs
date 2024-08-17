@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(custom_cpp_extension)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -14,6 +15,7 @@ find_package(pybind11 REQUIRED)
 pybind11_add_module(custom_extension
     custom_linear.cpp
     custom_conv.cpp
+    custom_dropout2d.cpp
     bindings.cpp  
 )
 
