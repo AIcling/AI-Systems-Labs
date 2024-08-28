@@ -5,7 +5,7 @@
 
 __global__ void linear_forward_kernel(const float* A, const float* B, const float* bias, float* C, int M, int N, int K){
     int row = blockDim.x * blockIdx.x + threadIdx.x;
-    int col = blockDim.y * blockDim.y + threadIdx.y;
+    int col = blockDim.y * blockIdx.y + threadIdx.y;
 
     if(row < M && col < K){
         float value = 0.0f;
@@ -27,7 +27,7 @@ __global__ void linear_backward_kernel(
     if(row < M && col < K){
         float value = 0.0f;
         for(int i=0;i<N;i++){
-            value += grad_output[row*K +i] + weights[col*K +i];
+            value += grad_output[row*K +i] * weights[col*K +i];
         }
         grad_input[row*N+col] = value;
     }
@@ -35,7 +35,7 @@ __global__ void linear_backward_kernel(
     if(row < N && col < K){
         float value = 0.0f;
         for(int i=0;i<M;i++){
-            value += input[i*N+row] + grad_output[i*K+col];
+            value += input[i*N+row] * grad_output[i*K+col];
         }
         grad_weights[row*K+col] = value;
     }

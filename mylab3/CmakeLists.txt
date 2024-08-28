@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(LinearCudaExtension LANGUAGES C CXX CUDA)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+set(Torch_DIR /mnt/e/AIsys/labs/microsoft/libtorch/share/cmake/Torch)
+find_package(Torch REQUIRED)
+find_package(pybind11 REQUIRED)
+
+set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS};-O3;-lineinfo)
+
+set(CUDA_SRC linear_kernel.cu)
+
+set(CXX_SRC linear_cuda.cpp)
+
+add_library(${PROJECT_NAME} SHARED ${CXX_SRC} ${CUDA_SRC})
+
+target_link_libraries(${PROJECT_NAME} "${TORCH_LIBRARIES}")
+target_link_libraries(${PROJECT_NAME} PRIVATE pybind11::module)
+target_include_directories(${PROJECT_NAME} PRIVATE "${TORCH_INCLUDE_DIRS}")
+target_include_directories(${PROJECT_NAME} PRIVATE ${pybind11_INCLUDE_DIRS})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME} SUFFIX ".so" LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+message(STATUS "PyTorch found: ${TORCH_LIBRARIES}")
+message(STATUS "Include directories: ${TORCH_INCLUDE_DIRS}")
+message(STATUS "pybind11 include directories: ${pybind11_INCLUDE_DIRS}")
